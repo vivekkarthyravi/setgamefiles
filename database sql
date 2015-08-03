@@ -1,0 +1,24 @@
+CREATE SCHEMA `setgamedb` ;
+
+CREATE TABLE `setgamedb`.`game` (
+  `gameID` VARCHAR(30) NOT NULL,
+  `gameInstance` INT NOT NULL,
+  `numPlayers` INT NOT NULL,
+  `gameDuration` VARCHAR(45) NULL,
+  PRIMARY KEY (`gameID`),
+  UNIQUE INDEX `gameID_UNIQUE` (`gameID` ASC));
+
+CREATE TABLE `setgamedb`.`user` (
+  `userId` INT NOT NULL AUTO_INCREMENT,
+  `userName` VARCHAR(45) NOT NULL,
+  `userScore` INT NULL,
+  `userPassword` VARCHAR(20) NOT NULL,
+  `gameID` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`userId`),
+  UNIQUE INDEX `userID_UNIQUE` (`userId` ASC),
+  INDEX `gameID_idx` (`gameID` ASC),
+  CONSTRAINT `gameID`
+    FOREIGN KEY (`gameID`)
+    REFERENCES `setgamedb`.`game` (`gameID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
